@@ -9,7 +9,7 @@ const Register = () => {
     confirmPassword: ''
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e :any) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -17,7 +17,7 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e :any) => {
     e.preventDefault();
     // Ajoutez ici la logique de soumission du formulaire
     console.log(formData);
@@ -30,7 +30,7 @@ const Register = () => {
         <h2 className="text-2xl font-semibold mb-4">Inscription</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Nom d'utilisateur</label>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Nom d&apos;utilisateur</label>
             <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-400" />
           </div>
           <div className="mb-4">
@@ -45,7 +45,7 @@ const Register = () => {
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirmez le mot de passe</label>
             <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-400" />
           </div>
-          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-400">S'inscrire</button>
+          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-400">S&apos;inscrire</button>
         </form>
       </div>
     </div>

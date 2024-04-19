@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 const express = require('express');
 const { Sequelize, DataTypes } = require('sequelize');
 const Joi = require('joi');
@@ -61,7 +63,7 @@ function validateUser(user: any) {
 }
 
 // Routes pour les utilisateurs
-app.post('/api/users', async (req, res) => {
+app.post('/api/users', async (req: Request, res: any) => {
   // Validation de la requête
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);

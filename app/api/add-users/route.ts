@@ -16,7 +16,10 @@ export async function GET(request: Request) {
       VALUES (${username}, ${email}, ${password});
     `;
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if(error instanceof Error){
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    
   }
  
   // Sélectionner tous les utilisateurs dans la base de données 
