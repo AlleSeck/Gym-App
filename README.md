@@ -4,19 +4,16 @@
 npm run dev
 
 
-# SchoolApp
+# Gym-App
 
 
-SchoolApp is a communication tool between the school, students, and their parents. It's a software used by the institution to manage student absences and academic results.
+🏋️‍♂️ Bienvenue dans notre application de gym ! 🏋️‍♀️
 
-Parents have the opportunity to be involved in their child(ren)'s education by accessing essential information.
+Transformez votre smartphone en votre propre salle de sport avec notre application de fitness tout-en-un. Que vous soyez débutant ou athlète confirmé, notre application propose une gamme complète de séances d'entraînement, des programmes personnalisés et des outils de suivi de la progression pour vous aider à atteindre vos objectifs de remise en forme.
 
-Specifically, for a given student, it includes:
+✨ Caractéristiques principales :
 
-Academic results: grades obtained during the semester;
-Summary of absences;
-Class schedule;
-Homework agenda.
-The class agenda: regularly filled out by teachers and complementary to the student's agenda, it allows parents to know the homework assigned for home study.
-
-The content of the courses.
+- Séances d'entraînement variées : musculation, cardio, yoga, méditation, et plus encore.
+- Séances en direct avec des coachs experts.
+- Outils de suivi de la progression pour rester motivé.
+- Participation à des défis communautaires pour stimuler votre engagement.
