@@ -1,26 +1,47 @@
 'use client'
 
-// login.js
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { CredentialsSignInButton, GoogleSignInButton } from '../components/authButtons';
 
 const LoginPage = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const signInResponse = await signIn("credentials", {
+      email: data.get('email'),
+      password: data.get('password'),
+      redirect: false,
+    });
+
+    if (signInResponse && !signInResponse.error){
+      //redirect to homepage (/timeline)
+      router.push("/");
+    } else {
+      console.log("Error: ", signInResponse);
+      setError("Your Email or Password is wrong !");
+    }
+
     // Logique de connexion à implémenter
     console.log('Email:', email);
-    console.log('Password:', password);
+    console.log('Password:', password); 
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
+        <GoogleSignInButton/>
+        <CredentialsSignInButton/>
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Connexion</h2>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+        <form className="mt-8 space-y-6" onSubmit={(e) => { e.preventDefault(); handleLogin(e); }}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">Adresse e-mail</label>
@@ -62,3 +83,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+function setError(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

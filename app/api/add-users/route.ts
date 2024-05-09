@@ -1,28 +1,21 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
+import { db } from ''; // Importez votre connexion à la base de données
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const username = searchParams.get('username');
-  const email = searchParams.get('email');
-  const password = searchParams.get('password');
- 
+export async function POST(request: Request) {
+  const { username, email, password } = await request.json();
+
   try {
     if (!username || !email || !password) throw new Error('Username, email, and password are required');
     
-    // Insérer un nouvel utilisateur dans la base de données
-    await sql`
-      INSERT INTO Users (username, email, password)
-      VALUES (${username}, ${email}, ${password});
-    `;
+    // Insérer un nouvel utilisateur dans la base de données en utilisant des placeholders
+    await db.query(
+      sql`INSERT INTO Users (username, email, password) VALUES (${username}, ${email}, ${password})`
+    );
+
+    return NextResponse.json({ message: 'User created successfully' }, { status: 201 });
   } catch (error) {
-    if(error instanceof Error){
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-    
+    console.error('Error creating user:', error);
+    return NextResponse.json({ error: 'Error creating user' }, { status: 500 });
   }
- 
-  // Sélectionner tous les utilisateurs dans la base de données 
-  const users = await sql`SELECT * FROM Users;`;
-  return NextResponse.json({ users }, { status: 200 });
 }

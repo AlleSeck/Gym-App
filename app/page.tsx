@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
+
 export default function Home() {
   const router = useRouter();
 
@@ -21,7 +22,6 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Head />
-
       <div className="flex-grow">
         <main className="container mx-auto py-8">
           <Nav />
