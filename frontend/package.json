@@ -16,6 +16,7 @@
     "@types/react-dom": "18.2.23",
     "@vercel/postgres": "^0.8.0",
     "autoprefixer": "10.4.19",
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "config": "^3.3.11",
     "eslint": "8.57.0",

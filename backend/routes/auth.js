@@ -1,8 +1,6 @@
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
-const _ = require('lodash');
-const {User, validateUser} = require('../models/user');
-const mongoose = require('mongoose');
+const { User } = require('../models/user');
 
 const express = require('express');
 const router = express.Router();
@@ -30,4 +28,4 @@ function validate(req) {
   return schema.validate(req);
 }
 
-module.exports = router; 
+module.exports = router;
