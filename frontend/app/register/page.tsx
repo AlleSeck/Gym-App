@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 interface FormData {
@@ -28,6 +29,7 @@ const Register = () => {
     termsAccepted: false
   });
   const [error, setError] = useState<string>('');
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -39,14 +41,24 @@ const Register = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (formData.email !== formData.confirmEmail) {
+      setError('Emails do not match');
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
     try {
       // Envoyer les données au serveur
       const response = await axios.post('http://localhost:3001/api/users', formData);
       console.log('User registered successfully:', response.data);
+      // Rediriger l'utilisateur vers la page de tableau de bord
+      router.push('/dashboard');
     } catch (error) {
       console.error('There was an error registering the user:', error);
-      //setError(error.response?.data?.message || error.message || 'An error occurred');
-
+      setError('There was an error registering the user.');
     }
   };
 

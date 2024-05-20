@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const authMiddleware = require('./middleware/auth'); 
 const dotenv = require('dotenv');
 const cors = require('cors');
 
@@ -23,6 +24,15 @@ server.use(express.json());
 server.use(cors({
   origin: 'http://localhost:3000'
 }));
+
+// Token validation middleware for other routes
+server.use((req, res, next) => {
+  const excludedRoutes = ['/api/auth', '/api/users'];
+  if (excludedRoutes.includes(req.path)) {
+    return next();
+  }
+  authMiddleware(req, res, next);
+});
 
 server.use('/api/users', users);
 server.use('/api/auth', auth);

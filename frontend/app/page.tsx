@@ -4,19 +4,21 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Vérifier si l'utilisateur est connecté
-    const userLoggedIn = true; // À remplacer par votre logique d'authentification
+    // Récupérer le token JWT du cookie
+    const token = Cookies.get('token');
 
-    // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
-    if (!userLoggedIn) {
-      router.push('/login'); // Rediriger vers la page de connexion
+    // Vérifier si le token existe et est valide
+    if (!token) {
+      // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+      router.push('/login');
     }
-  }, []);
+  }, [router]);
 
   return (
     <div className="flex flex-col min-h-screen">

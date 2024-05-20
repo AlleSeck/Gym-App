@@ -40,7 +40,11 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function() { 
-  const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, process.env.JWT_PRIVATE_KEY);
+  const token = jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin }, 
+    process.env.JWT_PRIVATE_KEY,
+    { expiresIn: '30d' } // Token expires in 30 days
+  );
   return token;
 }
 

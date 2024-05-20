@@ -1,8 +1,10 @@
-'use client'
+'use client';
 
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 interface LoginForm {
   email: string;
@@ -15,6 +17,7 @@ const LoginPage = () => {
     password: ''
   });
   const [error, setError] = useState<string>('');
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,11 +30,12 @@ const LoginPage = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth', formData);
+      const response = await axios.post('http://localhost:3001/api/auth', formData);
       console.log('Login successful:', response.data);
-      // Rediriger l'utilisateur vers la page de tableau de bord
-      // window.location.href = '/dashboard';
-      
+      const token = response.data;
+      Cookies.set('token', token);
+      // Redirige to the dashboard
+      router.push('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       setError('Invalid email or password.');
@@ -48,18 +52,38 @@ const LoginPage = () => {
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">Adresse e-mail</label>
-              <input id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Adresse e-mail" value={formData.email} onChange={handleChange} />
+              <input
+                id="email-address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Adresse e-mail"
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
             <div>
               <label htmlFor="password" className="sr-only">Mot de passe</label>
-              <input id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Mot de passe" value={formData.password} onChange={handleChange} />
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Mot de passe"
+                value={formData.password}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="text-sm">
               <Link href="/forgetPassword" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Mots de passe oublié ?
+                Mot de passe oublié ?
               </Link>
               <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500 ml-4">
                 Inscription
@@ -67,8 +91,13 @@ const LoginPage = () => {
             </div>
           </div>
 
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+
           <div>
-            <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <svg className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M2 5a3 3 0 013-3h10a3 3 0 013 3v7a3 3 0 01-3 3H5a3 3 0 01-3-3V5zm3-2a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5z" clipRule="evenodd" />
@@ -85,5 +114,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-
