@@ -32,9 +32,11 @@ const LoginPage = () => {
     try {
       const response = await axios.post('http://localhost:3001/api/auth', formData);
       console.log('Login successful:', response.data);
+
       const token = response.data;
-      Cookies.set('token', token);
-      // Redirige to the dashboard
+      Cookies.set('accessToken', token); // Store the token in a cookie named 'accessToken'
+
+      // Redirect to the dashboard
       router.push('/dashboard');
     } catch (error) {
       console.error('Login error:', error);

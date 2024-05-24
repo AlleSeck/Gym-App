@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const admin = require('./routes/admin');
 const authMiddleware = require('./middleware/auth'); 
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -36,6 +37,7 @@ server.use((req, res, next) => {
 
 server.use('/api/users', users);
 server.use('/api/auth', auth);
+server.use('/api/admin', admin)
 
 const port = process.env.PORT || 3001;
 server.listen(port, (err) => {
