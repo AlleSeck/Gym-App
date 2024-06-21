@@ -55,7 +55,7 @@ const Register = () => {
       const response = await axios.post('http://localhost:3001/api/users', formData);
       console.log('User registered successfully:', response.data);
       // Rediriger l'utilisateur vers la page de tableau de bord
-      router.push('/dashboard');
+      router.push('/emailVerification');
     } catch (error) {
       console.error('There was an error registering the user:', error);
       setError('There was an error registering the user.');
